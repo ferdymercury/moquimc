@@ -3,7 +3,7 @@
 
 /// \file
 ///
-/// Rectlinear grid geometry for MC transport
+/// Rectilinear grid geometry for MC transport
 ///
 
 #include <moqui/base/mqi_common.hpp>
