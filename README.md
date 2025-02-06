@@ -3,6 +3,8 @@ MOnte carlo code for QUIck proton dose calculation (moqui)
 
 <img src="images/moqui_logo.jpg">
 
+See associated publication in [Phys Med Biol 67 174001](https://doi.org/10.1088/1361-6560/ac8716)
+
 ### Installation
 #### Requirements
 - GDCM > 2
