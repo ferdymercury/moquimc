@@ -95,9 +95,10 @@ public:
         mqi::relativistic_quantities<R> rel(trk.vtx0.ke, units.Mp);
         R                               length = 0.0;
         ///calculate maximum possible energy-loss
+#ifdef DEBUG
         R max_loss_step    = max_energy_loss * -1.0 * rel.Ek / p_ion.dEdx(rel, mat);
-        R current_min_step = this->max_step;
-        current_min_step   = current_min_step * mat->compute_rsp_(rho_mass, rel.Ek) * rho_mass /
+#endif
+        R current_min_step = this->max_step * mat->compute_rsp_(rho_mass, rel.Ek) * rho_mass /
                            this->units.water_density;
         R max_loss_energy = -1.0 * current_min_step * p_ion.dEdx(rel, mat);
         R cs1[4]          = { p_ion.cross_section(rel, mat, rho_mass),
