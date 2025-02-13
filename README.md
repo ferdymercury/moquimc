@@ -99,7 +99,7 @@ Add:
 - See https://github.com/clangd/clangd/issues/858 and https://github.com/clangd/clangd/issues/1815
 
 For an Ampere GPU NVIDIA A40:
-- `cmake -DCUDAToolkit_ROOT=/usr/local/cuda-12.6 -DCMAKE_CUDA_ARCHITECTURES=86 -DCMAKE_CUDA_COMPILER=/usr/local/cuda-12.6/bin/nvcc`
+- `cmake ../ -DCUDAToolkit_ROOT=/usr/local/cuda-12.6 -DCMAKE_CUDA_ARCHITECTURES=86 -DCMAKE_CUDA_COMPILER=/usr/local/cuda-12.6/bin/nvcc`
 
 ### Acknowledgements
 This work is supported by NIH/NCI R01 234210 "Fast Individualized Delivery Adaptation in Proton Therapy"
