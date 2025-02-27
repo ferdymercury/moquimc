@@ -500,15 +500,15 @@ mqi::io::save_to_mhd(const mqi::node_t<R>* children,
                      const uint32_t        length) {
     ///< TODO: this works only for two depth world
     ///< TODO: dx, dy, and dz calculation works only for AABB
-    float dx = children->geo[0].get_x_edges()[1];
+    double dx = children->geo[0].get_x_edges()[1];
     dx -= children->geo[0].get_x_edges()[0];
-    float dy = children->geo[0].get_y_edges()[1];
+    double dy = children->geo[0].get_y_edges()[1];
     dy -= children->geo[0].get_y_edges()[0];
-    float dz = children->geo[0].get_z_edges()[1];
+    double dz = children->geo[0].get_z_edges()[1];
     dz -= children->geo[0].get_z_edges()[0];
-    float x0 = children->geo[0].get_x_edges()[0]+dx*0.5;
-    float y0 = children->geo[0].get_y_edges()[0]+dy*0.5;
-    float z0 = children->geo[0].get_z_edges()[0]+dz*0.5;
+    double x0 = children->geo[0].get_x_edges()[0]+dx*0.5;
+    double y0 = children->geo[0].get_y_edges()[0]+dy*0.5;
+    double z0 = children->geo[0].get_z_edges()[0]+dz*0.5;
     std::ofstream fid_header(filepath + "/" + filename + ".mhd", std::ios::out);
     if (!fid_header) { std::cout << "Cannot open file!" << std::endl; }
     fid_header << "ObjectType = Image\n";
@@ -552,15 +552,15 @@ mqi::io::save_to_mha(const mqi::node_t<R>* children,
                      const uint32_t        length) {
     ///< TODO: this works only for two depth world
     ///< TODO: dx, dy, and dz calculation works only for AABB
-    float dx = children->geo[0].get_x_edges()[1];
+    double dx = children->geo[0].get_x_edges()[1];
     dx -= children->geo[0].get_x_edges()[0];
-    float dy = children->geo[0].get_y_edges()[1];
+    double dy = children->geo[0].get_y_edges()[1];
     dy -= children->geo[0].get_y_edges()[0];
-    float dz = children->geo[0].get_z_edges()[1];
+    double dz = children->geo[0].get_z_edges()[1];
     dz -= children->geo[0].get_z_edges()[0];
-    float x0 = children->geo[0].get_x_edges()[0] + dx * 0.5;
-    float y0 = children->geo[0].get_y_edges()[0] + dy * 0.5;
-    float z0 = children->geo[0].get_z_edges()[0] + dz * 0.5;
+    double x0 = children->geo[0].get_x_edges()[0] + dx * 0.5;
+    double y0 = children->geo[0].get_y_edges()[0] + dy * 0.5;
+    double z0 = children->geo[0].get_z_edges()[0] + dz * 0.5;
     std::cout << "x0 " << std::setprecision(9) << x0 << " y0 " << y0 << " z0 " << z0 << std::endl;
     std::valarray<double> dest(src, length);
     munmap(&dest, length * sizeof(double));

@@ -125,14 +125,14 @@ public:
     virtual size_t
     characterize_history(const mqi::beam_module_ion::spot& s0,
                          const mqi::beam_module_ion::spot& s1,
-                         float                             scale) {
+                         double                             scale) {
         return 0;
     }
 
     /// Characterize MODULATED_SPEC/UNIFORM
     /// \note not yet implemented cause we treat patients with spot-scanning only
     virtual size_t
-    characterize_history(const mqi::beam_module_ion::spot& s, float scale) {
+    characterize_history(const mqi::beam_module_ion::spot& s, double scale) {
         auto beam_up = beamdata_.lower_bound(s.e);
         if (beam_up == beamdata_.begin()) std::cerr << "out-of-bound\n";
         auto beam_down = std::prev(beam_up, 1);
@@ -237,7 +237,7 @@ public:
     /// Characterize beamlet for MODULATED beam
     mqi::beamlet<T>
     characterize_beamlet(const mqi::beam_module_ion::spot& s,
-                         const float                       source_to_isocenter_mm = 390.0) {
+                         const double                       source_to_isocenter_mm = 390.0) {
         treatment_machine<T>::source_to_isocenter_mm_ = source_to_isocenter_mm;
         //energy distribution
         auto beam_up = beamdata_.lower_bound(s.e);
@@ -294,7 +294,7 @@ public:
         lxyz.y = geometry_spec_.rangeshifter[1];   //if this is 0, rangeshifter is circle
 
         if (rangeshifter_.size() == 0) {
-            std::vector<float> ftmp;
+            std::vector<double> ftmp;
             std::cout << "Thickness is defined from RangeShifter Setting sequence\n";
             auto rs_ss0 = (*layer0)(seq_tags->at("rsss"))[0];
 
@@ -313,7 +313,7 @@ public:
         } else {
 
             std::cout << "Thickness is defined from Rangeshifter ID\n";
-            std::vector<float> ftmp;
+            std::vector<double> ftmp;
             layer0->get_values("SnoutPosition", ftmp);
             pxyz.z = ftmp[0];
 
@@ -377,20 +377,20 @@ public:
         auto seq_tags = &mqi::seqtags_per_modality.at(m);
 
         std::vector<std::string> stmp;
-        std::vector<float>       ftmp;
+        std::vector<double>       ftmp;
 
         ///< 1. block sequence
         auto blk_ds = (*ds)(seq_tags->at("blk"));
         assert(blk_ds.size() >= 1);
         blk_ds[0]->get_values("BlockThickness", ftmp);
-        mqi::vec3<float> lxyz(
+        mqi::vec3<double> lxyz(
           geometry_spec_.aperture[0], geometry_spec_.aperture[1], ftmp[0]);   //360 or 0?
 
         blk_ds[0]->get_values("IsocenterToBlockTrayDistance", ftmp);
-        mqi::vec3<float> pxyz(0.0, 0.0, ftmp[0] + lxyz.z * 0.5);
+        mqi::vec3<double> pxyz(0.0, 0.0, ftmp[0] + lxyz.z * 0.5);
         std::cout << "BlockThickness and Position (center) : " << lxyz.z << ", " << pxyz.z << " mm"
                   << std::endl;
-        mqi::mat3x3<float> rxyz(0.0, 0.0, 0.0);
+        mqi::mat3x3<double> rxyz(0.0, 0.0, 0.0);
         //3. x-y points for opening
         auto xypts = this->characterize_aperture_opening(ds, m);
         return new mqi::aperture(xypts, lxyz, pxyz, rxyz, false);

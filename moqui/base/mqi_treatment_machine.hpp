@@ -30,10 +30,10 @@ protected:
 
     ///< Source to Axis distance,
     ///< neccessary to calculate beam divergence
-    std::array<float, 2> SAD_;
+    std::array<double, 2> SAD_;
 
     ///< Distance from phase-space plan to isocenter
-    float source_to_isocenter_mm_;
+    double source_to_isocenter_mm_;
 
 public:
     /// Default constructor
@@ -62,8 +62,8 @@ public:
     create_beamsource(const mqi::dataset*                ds,
                       const mqi::modality_type           m,
                       const mqi::coordinate_transform<T> pcoord,
-                      const float                        particles_per_history  = -1,
-                      const float                        source_to_isocenter_mm = 390.0) = 0;
+                      const double                       particles_per_history  = -1,
+                      const double                       source_to_isocenter_mm = 390.0) = 0;
 
     /// Returns beamsource model from file, e.g., tramp for MGH
     /// \param pcoord: coordinate system of beam geometry including gantry, patient support, etc
@@ -72,8 +72,8 @@ public:
     create_beamsource(const std::vector<mqi::beam_module_ion::spot>& spots,
                       const mqi::modality_type                       m,
                       const mqi::coordinate_transform<T>             pcoord,
-                      const float                                    particles_per_history = -1,
-                      const float source_to_isocenter_mm = 390.0) = 0;
+                      const double                                   particles_per_history = -1,
+                      const double source_to_isocenter_mm = 390.0) = 0;
 
     /// Returns coordinate transform information
     /// \param ds : pointer of dataset
@@ -95,7 +95,7 @@ protected:
     /// \return beamlet: beamlet created from given parameters
     virtual mqi::beamlet<T>
     characterize_beamlet(const mqi::beam_module_ion::spot& s,
-                         const float                       source_to_isocenter_mm) = 0;
+                         const double                       source_to_isocenter_mm) = 0;
 };
 
 }   // namespace mqi

@@ -8,7 +8,7 @@ namespace mqi
 
 ///< Data table (from Geant4 TestEm0. Ei = 0.1 * MeV,  Ef = 299.6 MeV, dE = 0.5 MeV, Te_cut = 0.1 mm (85.1138 keV)
 ///<  - Cross-section (per )  mm2/g
-CUDA_CONSTANT const float cs_p_ion_table[600] = {
+CUDA_CONSTANT const double cs_p_ion_table[600] = {
     0,       0,       0,       0,       0,       0,       0,       0,       0,       0,
     0,       0,       0,       0,       0,       0,       0,       0,       0,       0,
     0,       0,       0,       0,       0,       0,       0,       0,       0,       0,
@@ -71,7 +71,7 @@ CUDA_CONSTANT const float cs_p_ion_table[600] = {
     185.599, 185.443, 185.288, 185.133, 184.978, 184.824, 184.67,  184.517, 184.364, 184.211
 };
 ////Total stopping power (I=75 eV)  from Geant4
-CUDA_CONSTANT const float restricted_stopping_power_table[600] = {
+CUDA_CONSTANT const double restricted_stopping_power_table[600] = {
     96.14890, 37.78070, 25.01300, 19.19030, 15.72410, 13.29680, 11.59950, 10.30940, 9.32706,
     8.52858,  7.87007,  7.30757,  6.82805,  6.41238,  6.04993,  5.73076,  5.44499,  5.18804,
     4.95664,  4.74746,  4.55726,  4.38310,  4.22243,  4.07389,  3.93642,  3.80893,  3.69031,
@@ -142,7 +142,7 @@ CUDA_CONSTANT const float restricted_stopping_power_table[600] = {
 };
 
 ////Total stopping power (I=75 eV)  from Geant4
-CUDA_CONSTANT const float range_steps[600] = {
+CUDA_CONSTANT const double range_steps[600] = {
     0.001391,   0.010586,   0.027285,   0.050344,   0.079284,   0.113983,   0.154354,   0.200174,
     0.251242,   0.307367,   0.368453,   0.434431,   0.505264,   0.580871,   0.661183,   0.746137,
     0.835679,   0.929781,   1.028410,   1.131510,   1.239030,   1.350930,   1.467180,   1.587760,

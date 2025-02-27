@@ -42,14 +42,14 @@ class geometry
 {
 
 public:
-    const mqi::vec3<float>   pos;       ///< position, public access
-    const mqi::mat3x3<float> rot;       ///< rotation, public access
+    const mqi::vec3<double>   pos;       ///< position, public access
+    const mqi::mat3x3<double> rot;       ///< rotation, public access
     const geometry_type      geotype;   ///< geometry type, public access
 
     /// Constructor
     /// \param p_xyz position vector
     /// \param rot_xyz rotation matrix 3x3
-    geometry(mqi::vec3<float>& p_xyz, mqi::mat3x3<float>& rot_xyz, mqi::geometry_type t) :
+    geometry(mqi::vec3<double>& p_xyz, mqi::mat3x3<double>& rot_xyz, mqi::geometry_type t) :
         pos(p_xyz), rot(rot_xyz), geotype(t) {
         ;
     }
@@ -57,8 +57,8 @@ public:
     /// Constructor
     /// \param p_xyz position vector
     /// \param rot_xyz rotation matrix 3x3
-    geometry(const mqi::vec3<float>&   p_xyz,
-             const mqi::mat3x3<float>& rot_xyz,
+    geometry(const mqi::vec3<double>&   p_xyz,
+             const mqi::mat3x3<double>& rot_xyz,
              const mqi::geometry_type  t) :
         pos(p_xyz),
         rot(rot_xyz), geotype(t) {

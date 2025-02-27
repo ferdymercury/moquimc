@@ -44,7 +44,7 @@ public:
         std::cout << "create_coordinate_transform:" << std::endl;
         auto                     seq_tags = &mqi::seqtags_per_modality.at(m);
         auto                     layer0   = (*ds)(seq_tags->at("ctrl"))[0];   //layer0
-        std::vector<float>       tmp;
+        std::vector<double>       tmp;
         std::vector<std::string> tmp_dir;
         std::array<T, 4>         angles;
         ///< As CW, CRW, NONE, conditionally required, we don't use them at this moment
@@ -84,8 +84,8 @@ public:
     create_beamsource(const mqi::dataset*                ds,
                       const mqi::modality_type           m,
                       const mqi::coordinate_transform<T> pcoord,
-                      const float                        particles_per_history  = -1,
-                      const float                        source_to_isocenter_mm = 390.0) {
+                      const double                        particles_per_history  = -1,
+                      const double                        source_to_isocenter_mm = 390.0) {
         treatment_machine<T>::source_to_isocenter_mm_ = source_to_isocenter_mm;
 
         ///< Parse DICOM beam module for Ion
@@ -148,8 +148,8 @@ public:
     create_beamsource(const std::vector<mqi::beam_module_ion::spot>& spots,
                       const mqi::modality_type                       m,
                       const mqi::coordinate_transform<T>             pcoord,
-                      const float                                    particles_per_history = -1,
-                      const float source_to_isocenter_mm = 390.0) {
+                      const double                                    particles_per_history = -1,
+                      const double source_to_isocenter_mm = 390.0) {
 
         treatment_machine<T>::source_to_isocenter_mm_ = source_to_isocenter_mm;
         ///< Parse DICOM beam module for ION
@@ -195,7 +195,7 @@ public:
     /// User method to characterize MODULATED beamlet based on spot information ans source to isocenter distnace from DICOM.
     virtual mqi::beamlet<T>
     characterize_beamlet(const mqi::beam_module_ion::spot& s,
-                         const float                       source_to_isocenter_mm) = 0;
+                         const double                       source_to_isocenter_mm) = 0;
 
     /// User method to characterize UNIFORM/MODULATED_SPEC beamlet based on spot information from DICOM.
     virtual mqi::beamlet<T>
@@ -213,7 +213,7 @@ public:
     /// User method to characterize number of histories per MODULATED beamlet
     /// based on spot information from DICOM.
     virtual size_t
-    characterize_history(const mqi::beam_module_ion::spot& s, float scale) {
+    characterize_history(const mqi::beam_module_ion::spot& s, double scale) {
         return s.meterset / scale;
     }
 
@@ -222,7 +222,7 @@ public:
     virtual size_t
     characterize_history(const mqi::beam_module_ion::spot& s0,
                          const mqi::beam_module_ion::spot& s1,
-                         float                             scale) {
+                         double                             scale) {
         return s1.meterset / scale;
     }
 
@@ -246,7 +246,7 @@ public:
         ///< position from control point 0
         ///< beamline.append_geometry(this->characterize_snout);
         std::vector<int>                   itmp;
-        std::vector<std::pair<float, int>> ftmp;
+        std::vector<std::pair<double, int>> ftmp;
         ///< 1. number of rangeshifter sequence
         ds->get_values("NumberOfRangeShifters", itmp);
         std::cout << "number of range shifter: " << itmp[0] << std::endl;
@@ -293,9 +293,9 @@ public:
     /// \param m  modality type, e.g., RTIP or RTIBTR
     /// \note Users need to implement their own rule to convert DICOM info to APT specification.
     /// \note multiple holes are supported.
-    const std::vector<std::vector<std::array<float, 2>>>
+    const std::vector<std::vector<std::array<double, 2>>>
     characterize_aperture_opening(const mqi::dataset* ds, mqi::modality_type m) {
-        std::vector<std::vector<std::array<float, 2>>> apt_xy_points;
+        std::vector<std::vector<std::array<double, 2>>> apt_xy_points;
         auto                                           seq_tags = &mqi::seqtags_per_modality.at(m);
 
         //0. aperture sequence
@@ -303,9 +303,9 @@ public:
         assert(apt_ds.size() >= 1);
 
         for (auto apt : apt_ds) {
-            std::vector<std::array<float, 2>> block_data;
+            std::vector<std::array<double, 2>> block_data;
             std::vector<int>                  nb_xy_points;
-            std::vector<float>                xy_points;
+            std::vector<double>                xy_points;
 
             apt->get_values("BlockNumberOfPoints", nb_xy_points);
             apt->get_values("BlockData", xy_points);

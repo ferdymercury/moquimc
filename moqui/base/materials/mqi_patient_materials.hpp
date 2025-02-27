@@ -8,7 +8,7 @@
 
 namespace mqi
 {
-CUDA_CONSTANT const float density_correction[3996] = {
+CUDA_CONSTANT const double density_correction[3996] = {
     9.35212, 5.55269, 4.14652, 3.41395, 2.9645,  2.66061, 2.44144, 2.27588, 2.1464,  2.04239,
     1.95698, 1.8856,  1.82506, 1.77307, 1.72791, 1.68835, 1.6534,  1.62229, 1.59442, 1.56932,
     1.54659, 1.52591, 1.50701, 1.48968, 1.47373, 1.45899, 1.44534, 1.43265, 1.42084, 1.40981,
@@ -412,7 +412,7 @@ CUDA_CONSTANT const float density_correction[3996] = {
 };
 
 template<typename R>
-CUDA_DEVICE float
+CUDA_DEVICE R
 spr_default(R rho_mass, R Ek) {
     ////< 0.9 g/cm^3 ->  g/mm^3
     R density_tmp = rho_mass * 1000.0;

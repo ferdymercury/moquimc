@@ -90,7 +90,7 @@ static const std::map<const modality_type, const std::map<const std::string, con
 /// mqi::data was written to provide the access to gdcm's Nested Dataset,
 /// i.e., GetItem() is removed.
 /// In RTI, we get values from either tag or keyword.
-/// We converts decimal strings to float by default.
+/// We converts decimal strings to double by default.
 /// Example:
 /// std::vector<int> tmp;
 /// block_ds->get_values("NumberOfBlocks", tmp);
@@ -246,29 +246,29 @@ public:
         std::cout << std::endl;
     }
 
-    /// Get DICOM values in a float vector
+    /// Get DICOM values in a double vector
     /// \param bv pointer to ByteValue
     /// \param vr DICOM Value Representation: http://dicom.nema.org/dicom/2013/output/chtml/part05/sect_6.2.html
     /// \param vm DICOM Value Multiplicity: http://dicom.nema.org/dicom/2013/output/chtml/part05/sect_6.4.html
     /// \param vl Value length
-    /// \param res reference to a "float" container for dicom values.
+    /// \param res reference to a "double" container for dicom values.
     /// \return void
     void
     get_values(const gdcm::ByteValue* bv,
                const gdcm::VR         vr,
                const gdcm::VM         vm,
                const gdcm::VL         vl,
-               std::vector<float>&    res) const {
+               std::vector<double>&    res) const {
         res.clear();
 
         if (vr & gdcm::VR::VRBINARY) {
             assert(vr & gdcm::VR::FL);
 
-            size_t ndim = vl / sizeof(float);   ///< T should be given 'float'
+            size_t ndim = vl / sizeof(double);   ///< T should be given 'double'
             res.resize(ndim);
-            bv->GetBuffer((char*) &res[0], ndim * sizeof(float));
+            bv->GetBuffer((char*) &res[0], ndim * sizeof(double));
         } else if (vr & gdcm::VR::VRASCII) {
-            //ascii & numeric (int, float)
+            //ascii & numeric (int, double)
             //ascii & IS, DS, -> decimal strings...
             std::string       s    = std::string(bv->GetPointer(), bv->GetLength());
             size_t            beg  = 0;
@@ -303,7 +303,7 @@ public:
 
         if (ndim == 0) {
             if (vr & gdcm::VR::FL) {       //
-                ndim = vl / sizeof(int);   //T should be given 'float'
+                ndim = vl / sizeof(int);   //T should be given 'double'
             }
         }
         assert(ndim >= 1);   //From here, dim shouldn't be 0.a
@@ -424,9 +424,9 @@ public:
         } else {
             if (entry.GetVR() & gdcm::VR::FL) {
 
-                const size_t ndim = el.GetVL() / sizeof(float);
+                const size_t ndim = el.GetVL() / sizeof(double);
 
-                float c[ndim];
+                double c[ndim];
                 bv->GetBuffer((char*) c, sizeof(c));
 
                 std::cout << "FL encoding: ";

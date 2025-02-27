@@ -350,6 +350,29 @@ public:
     }
 
     CUDA_HOST
+        double
+        get_double(std::string option, double default_value) {
+        double value = std::stod(get_string(option, std::to_string(default_value)).c_str());
+        return value;
+    }
+
+    CUDA_HOST
+        std::vector<double>
+        get_double_vector(std::string option, std::string delimter) {
+        std::vector<std::string> value_tmp = get_string_vector(option, delimeter);
+        if (value_tmp.size() > 0) {
+            std::vector<double> value;
+            for (int i = 0; i < value_tmp.size(); i++) {
+                value.push_back(std::stod(value_tmp[i].c_str()));
+            }
+            return value;
+        } else {
+            std::vector<double> empty(0);
+            return empty;
+        }
+    }
+
+    CUDA_HOST
     int
     get_int(std::string option, int default_value) {
         int value = std::atoi(get_string(option, std::to_string(default_value)).c_str());

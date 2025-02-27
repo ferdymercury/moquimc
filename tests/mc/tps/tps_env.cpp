@@ -5,7 +5,7 @@
 #include <moqui/base/environments/mqi_tps_env.hpp>
 #include <moqui/base/mqi_cli.hpp>
 
-typedef float phsp_t;
+typedef double phsp_t;
 
 int
 main(int argc, char* argv[]) {

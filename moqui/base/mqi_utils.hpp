@@ -92,13 +92,13 @@ interp_linear(const std::vector<std::array<T, S>>& db,
 /// \param order the interpolation polynom order
 /// \return the y value corresponding to the x ordinate
 /// \note from gpmc code
-inline float
-TableInterpolation(float* const vector_X,
-                   float* const vector_Y,
-                   const float  x,
+inline double
+TableInterpolation(double* const vector_X,
+                   double* const vector_Y,
+                   const double  x,
                    const int    npoints,
                    int          order = 4) {
-    float result;
+    double result;
     // check order of interpolation
     if (order > npoints) order = npoints;
     // if x is ouside the vector_X[] interval
@@ -117,7 +117,7 @@ TableInterpolation(float* const vector_X,
     if (j + order > npoints) j = npoints - order;
     result = 0.0;
     // Allocate enough space for any table we'd like to read.
-    float* lambda = new float[npoints];
+    double* lambda = new double[npoints];
     for (int is = j; is < j + order; is++) {
         lambda[is] = 1.0;
         for (int il = j; il < j + order; il++) {

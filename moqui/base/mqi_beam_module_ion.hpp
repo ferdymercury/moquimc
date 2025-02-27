@@ -29,12 +29,12 @@ class beam_module_ion : public beam_module
 public:
     /// User-defined type for a spot
     typedef struct {
-        float e;          ///< The energy in MeV
-        float x;          ///< The x-position in mm
-        float y;          ///< The y-position in mm
-        float fwhm_x;     ///< The full-width-half maximum for x
-        float fwhm_y;     ///< The full-width-hafl maximum for y
-        float meterset;   ///< The meterset weight, e.g.,MU or NP.
+        double e;          ///< The energy in MeV
+        double x;          ///< The x-position in mm
+        double y;          ///< The y-position in mm
+        double fwhm_x;     ///< The full-width-half maximum for x
+        double fwhm_y;     ///< The full-width-hafl maximum for y
+        double meterset;   ///< The meterset weight, e.g.,MU or NP.
     } spot;
 
 protected:
@@ -54,11 +54,11 @@ public:
     beam_module_ion(const mqi::dataset* d, mqi::modality_type m) : beam_module(d, m) {
         /// Initializes containers
         std::vector<int>         nb_pts(1);
-        std::vector<float>       energy(1);
-        std::vector<float>       fwhm_xy(2);
+        std::vector<double>      energy(1);
+        std::vector<double>      fwhm_xy(2);
         std::vector<std::string> tune_id(1);
-        std::vector<float>       xy;
-        std::vector<float>       weight;
+        std::vector<double>      xy;
+        std::vector<double>      weight;
 
         int layer_nb = 0;
 

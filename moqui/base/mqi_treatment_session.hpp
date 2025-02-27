@@ -275,7 +275,7 @@ public:
     /// \return beamsource object.
     template<typename S>
     mqi::beamsource<T>
-    get_beamsource(S beam_id, const mqi::coordinate_transform<T> coord, float scale, T sid) {
+    get_beamsource(S beam_id, const mqi::coordinate_transform<T> coord, double scale, T sid) {
         return tx_machine_->create_beamsource(
           this->get_beam_dataset(beam_id), mtype_, coord, scale, sid);
     }
@@ -289,7 +289,7 @@ public:
     mqi::beamsource<T>
     get_beamsource(mqi::dataset*                      beam,
                    const mqi::coordinate_transform<T> coord,
-                   float                              scale,
+                   double                              scale,
                    T                                  sid) {
         return tx_machine_->create_beamsource(beam, mtype_, coord, scale, sid);
     }

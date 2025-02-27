@@ -8,7 +8,7 @@ namespace mqi
 
 ///< Cross-section from Geant4 Hard00, 0.1 MeV to 299.6 MeV with 0.5 MeV step
 ///< cm^2/g
-CUDA_CONSTANT const float cs_po_i_g4_table[600] = {
+CUDA_CONSTANT const double cs_po_i_g4_table[600] = {
     0.00000, 0.00000, 0.00096, 0.00460, 0.01201, 0.02453, 0.04343, 0.06979, 0.10449, 0.14818,
     0.20101, 0.26284, 0.33306, 0.41085, 0.49449, 0.58315, 0.67516, 0.76817, 0.86151, 0.95352,
     1.04285, 1.12850, 1.21013, 1.28641, 1.35768, 1.42358, 1.48414, 1.53901, 1.58083, 1.62265,
@@ -170,7 +170,7 @@ public:
         R                               E_2nd = 0;   // Total energy to secondary proton
         R     E_long  = 0;   // Energy loss to long range particle, e.g., leaving enerrgy
         R     E_short = 0;   // Energy loss to short range particle & binding, e.g. locally absorbed
-        float dE_total = 0;
+        R     dE_total = 0;
         ///< dissipate all energy by looping
         int secondary_protons = 0;
         /// empirical parameters for water I=75 eV

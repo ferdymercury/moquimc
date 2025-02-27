@@ -8,7 +8,7 @@
 namespace mc
 {
 
-typedef float            phsp_t;
+typedef double            phsp_t;
 mqi::material_t<phsp_t>* mc_materials = nullptr;
 mqi::node_t<phsp_t>*     mc_world     = nullptr;
 mqi::vertex_t<phsp_t>*   mc_vertices  = nullptr;
@@ -20,8 +20,8 @@ bool mc_score_variance = true;
 template<typename R>
 CUDA_GLOBAL void
 calculate_standard_deviation(mqi::node_t<R>* world,
-                             float*          standard_deviation,
-                             float*          dose_mean,
+                             double*          standard_deviation,
+                             double*          dose_mean,
                              int             n_histories,
                              int             stat_roi_size,
                              int             c_ind) {
@@ -49,7 +49,7 @@ calculate_standard_deviation(mqi::node_t<R>* world,
 
 template<typename R>
 CUDA_GLOBAL void
-calculate_average(mqi::node_t<R>* world, float weight, int roi_size, int c_ind) {
+calculate_average(mqi::node_t<R>* world, double weight, int roi_size, int c_ind) {
     uint32_t                  thread_id     = blockIdx.x * blockDim.x + threadIdx.x;
     uint32_t                  total_threads = (blockDim.x * gridDim.x);
     const mqi::vec2<uint32_t> h_range = mqi::start_and_length(total_threads, roi_size, thread_id);

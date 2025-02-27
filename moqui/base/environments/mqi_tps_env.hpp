@@ -33,21 +33,21 @@ namespace mqi
 struct dicom_t {
     mqi::vec3<ijk_t>               dim_;       //number of voxels
     mqi::vec3<ijk_t>               org_dim_;   //number of voxels
-    float                          dx = -1;
-    float                          dy = -1;
-    float*                         org_dz;
-    float*                         dz;
+    double                          dx = -1;
+    double                          dy = -1;
+    double*                         org_dz;
+    double*                         dz;
     uint16_t                       num_vol  = 0;
     uint16_t                       nfiles   = 0;
     uint16_t                       n_plan   = 0;
     uint16_t                       n_dose   = 0;
     uint16_t                       n_struct = 0;
-    float*                         xe       = nullptr;
-    float*                         ye       = nullptr;
-    float*                         ze       = nullptr;
-    float*                         org_xe   = nullptr;
-    float*                         org_ye   = nullptr;
-    float*                         org_ze   = nullptr;
+    double*                         xe       = nullptr;
+    double*                         ye       = nullptr;
+    double*                         ze       = nullptr;
+    double*                         org_xe   = nullptr;
+    double*                         org_ye   = nullptr;
+    double*                         org_ze   = nullptr;
     gdcm::Directory::FilenamesType plan_list;
     gdcm::Directory::FilenamesType dose_list;
     gdcm::Directory::FilenamesType struct_list;
@@ -56,12 +56,12 @@ struct dicom_t {
     std::string                    struct_name = "";
     std::string                    dose_name   = "";
     mqi::ct<phsp_t>*               ct;
-    mqi::vec3<float>               image_center;
+    mqi::vec3<double>               image_center;
     mqi::vec3<size_t>              dose_dim;
-    mqi::vec3<float>               dose_pos0;
-    float                          dose_dx;
-    float                          dose_dy;
-    float*                         dose_dz;
+    mqi::vec3<double>               dose_pos0;
+    double                          dose_dx;
+    double                          dose_dy;
+    double*                         dose_dz;
     mqi::vec3<uint16_t>            clip_shift_;
     uint8_t*                       body_contour;
     uint8_t*                       roi_contour;
@@ -104,14 +104,14 @@ public:
     int16_t*                   ct_data;
     mqi::treatment_session<R>* tx;
     uint16_t                   bnb                   = 0;
-    float                      sid                   = 0.0;
-    float                      particles_per_history = -1.0;
+    double                      sid                   = 0.0;
+    double                      particles_per_history = -1.0;
     std::string                beam_prefix;
     density_t*                 stopping_power;
-    float                      max_let_in_water;
+    double                      max_let_in_water;
     int                        aperture_ind  = -1;
     mqi::aperture_type_t       aperture_type = mqi::VOLUME;
-    std::vector<float>         scorer_voxel_size;
+    std::vector<double>         scorer_voxel_size;
     bool                       ct_clipping;
     int                        verbosity;
     std::string                body_contour_name;
@@ -121,24 +121,24 @@ public:
     bool                       reshape_output       = false;
     bool                       sparse_output        = false;
     std::string                source_extension     = "";
-    float                      rbe                  = 0;
+    double                      rbe                  = 0;
     int                        n_fractions          = 0;
     int                        unit_weights         = 0;
-    float                      rangeshifter_density = 0;
+    double                      rangeshifter_density = 0;
     //// Robustness setting
-    float density_scale  = 0;
-    float volume_shift_x = 0;
-    float volume_shift_y = 0;
-    float volume_shift_z = 0;
+    double density_scale  = 0;
+    double volume_shift_x = 0;
+    double volume_shift_y = 0;
+    double volume_shift_z = 0;
     //// Statistical stopping criteria
     bool                     record_statistics          = false;
     bool                     save_statistics            = false;
     bool                     set_stat_roi_from_rtstruct = false;
-    float                    stat_criteria              = 0;
+    double                    stat_criteria              = 0;
     std::string              stat_roi                   = "";
     std::vector<std::string> stat_roi_mask_filenames;
     int                      stat_roi_size  = 0;
-    float                    stat_threshold = 0.0;
+    double                    stat_threshold = 0.0;
     //    std::default_random_engine beam_rng;
 
 public:
@@ -189,10 +189,10 @@ public:
         /// Source parameters
         this->source_type = parser.get_string("SourceType", "FluenceMap");
         this->sim_type = parser.string_to_sim_type(parser.get_string("SimulationType", "perBeam"));
-        this->particles_per_history = parser.get_float("ParticlesPerHistory", -1.0);
-        this->rbe                   = parser.get_float("RBE", 1.1);
+        this->particles_per_history = parser.get_double("ParticlesPerHistory", -1.0);
+        this->rbe                   = parser.get_double("RBE", 1.1);
         this->n_fractions           = parser.get_int("NumberOfFraction", -1);
-        this->rangeshifter_density  = parser.get_float("RangeshifterDensity", 1.19);
+        this->rangeshifter_density  = parser.get_double("RangeshifterDensity", 1.19);
         this->unit_weights          = parser.get_int("UnitWeights", -1);
         this->machine_name          = parser.get_string("Machine", "");
         this->calibration_name      = parser.get_string("Calibration", "default");
@@ -234,17 +234,17 @@ public:
         score_to_ct_grid = true;
         if (!score_to_ct_grid) {
             /// TODO: dose grid scoring
-            scorer_voxel_size = parser.get_float_vector("ScorerVoxelSize", ",");
+            scorer_voxel_size = parser.get_double_vector("ScorerVoxelSize", ",");
             if (scorer_voxel_size.size() == 0) {
                 scorer_voxel_size = { 0, 0, 0 };
             }
         }
 
         //// Robust options
-        this->density_scale  = parser.get_float("DensityScaling", 1);
-        this->volume_shift_x = parser.get_float("XShift", 0);
-        this->volume_shift_y = parser.get_float("YShift", 0);
-        this->volume_shift_z = parser.get_float("ZShift", 0);
+        this->density_scale  = parser.get_double("DensityScaling", 1);
+        this->volume_shift_x = parser.get_double("XShift", 0);
+        this->volume_shift_y = parser.get_double("YShift", 0);
+        this->volume_shift_z = parser.get_double("ZShift", 0);
 
         /// Output parameters
         output_path   = parser.get_string("OutputDir", "");
@@ -271,9 +271,9 @@ public:
         this->save_statistics   = parser.get_bool("SaveStoppingStatistics", false);
 
         if (this->record_statistics) {
-            this->stat_criteria = parser.get_float("StoppingCriteria", -1.0);
+            this->stat_criteria = parser.get_double("StoppingCriteria", -1.0);
             if (this->stat_criteria < 0) {
-                throw std::runtime_error("Statistical criteria must be positive float");
+                throw std::runtime_error("Statistical criteria must be positive double");
             }
         }
 
@@ -287,7 +287,7 @@ public:
         }
         std::cout << parent_dir << std::endl;
 
-        this->stat_threshold = parser.get_float("StatThreshold", 0.0);
+        this->stat_threshold = parser.get_double("StatThreshold", 0.0);
         if (this->record_statistics) {
             if (!this->set_stat_roi_from_rtstruct && this->stat_roi_mask_filenames.size() == 0) {
                 if (this->stat_threshold <= 0) {
@@ -442,7 +442,7 @@ public:
         dcm.struct_list = s0.GetAllFilenamesFromTagToValue(Modality, "RTSTRUCT");
 
         printf("ct name: %s\n", this->ct_name.c_str());
-        float xe0, ye0, ze0;
+        double xe0, ye0, ze0;
         if (this->ct_name.empty()) {
             dcm.ct = new mqi::ct<R>(dicom_dir, false);
             dcm.ct->load_data();
@@ -457,7 +457,7 @@ public:
             this->ct_data = new int16_t[dcm.org_dim_.x * dcm.org_dim_.y * dcm.org_dim_.z];
             std::copy(begin(dcm.ct->get_data()), end(dcm.ct->get_data()), this->ct_data);
         } else {
-            mqi::vec3<float> ct_origin = read_ct_image(dcm);
+            mqi::vec3<double> ct_origin = read_ct_image(dcm);
             xe0                        = ct_origin.x - dcm.dx / 2.0;
             ye0                        = ct_origin.y - dcm.dy / 2.0;
             ze0                        = ct_origin.z - dcm.org_dz[0] / 2.0;
@@ -495,9 +495,9 @@ public:
             throw std::runtime_error("something wrong in reading the directory.");
         }
         // array of the dcm.ct contains center of voxels
-        dcm.org_xe = new float[dcm.dim_.x + 1];
-        dcm.org_ye = new float[dcm.dim_.y + 1];
-        dcm.org_ze = new float[dcm.dim_.z + 1];
+        dcm.org_xe = new double[dcm.dim_.x + 1];
+        dcm.org_ye = new double[dcm.dim_.y + 1];
+        dcm.org_ze = new double[dcm.dim_.z + 1];
 
         // Change the voxel center position to edge positions
         for (int i = 0; i < dcm.dim_.x + 1; i++)
@@ -561,8 +561,8 @@ public:
             auto     roi_contour_seq = (*struct_ds_)(gdcm::Tag(0x3006, 0x0039));
             uint8_t* body_contour = new uint8_t[dcm.org_dim_.x * dcm.org_dim_.y * dcm.org_dim_.z];
             std::vector<int>   refer_roi, contour_num;
-            std::vector<float> contour_data;
-            mqi::vec3<float>*  contour_points;
+            std::vector<double> contour_data;
+            mqi::vec3<double>*  contour_points;
             int                points_ind;
             start = std::chrono::high_resolution_clock::now();
             for (int con_ind = 0; con_ind < roi_contour_seq.size(); con_ind++) {
@@ -572,7 +572,7 @@ public:
                     for (int contour_ind = 0; contour_ind < contour_seq.size(); contour_ind++) {
                         contour_seq[contour_ind]->get_values("NumberOfContourPoints", contour_num);
                         contour_seq[contour_ind]->get_values("ContourData", contour_data);
-                        contour_points = new mqi::vec3<float>[contour_num[0]];
+                        contour_points = new mqi::vec3<double>[contour_num[0]];
                         for (points_ind = 0; points_ind < contour_num[0]; points_ind++) {
                             contour_points[points_ind].x = contour_data[points_ind * 3];
                             contour_points[points_ind].y = contour_data[points_ind * 3 + 1];
@@ -603,9 +603,9 @@ public:
     }
 
     CUDA_HOST
-    virtual mqi::vec3<float>
+    virtual mqi::vec3<double>
     read_ct_image(dicom_t& dcm) {
-        mqi::vec3<float> origin;
+        mqi::vec3<double> origin;
         std::string      line;
         std::ifstream    fid(this->ct_path, std::ios::ate);
         fid.seekg(0);
@@ -613,8 +613,8 @@ public:
         size_t      pos, pos_current, pos_prev, total_size;
         std::string parameter, value;
         uint16_t    nx, ny, nz;
-        float       dx, dy, dz1;
-        float*      dz;
+        double       dx, dy, dz1;
+        double*      dz;
         while (std::getline(fid, line)) {
             line      = trim_copy(line);
             pos       = line.find(ct_delimeter);
@@ -669,13 +669,13 @@ public:
                 break;   // This break is necessary to read correct number of voxels
             }
         }
-        dz = new float[nz];
+        dz = new double[nz];
         for (int kk = 0; kk < nz; kk++) {
             dz[kk] = dz1;
         }
         total_size = nx * ny * nz;
-        //Assuming it's float
-        float* ct_tmp = new float[total_size];
+        //Assuming it's double
+        double* ct_tmp = new double[total_size];
         fid.read((char*) (&ct_tmp[0]), total_size * sizeof(ct_tmp[0]));
         fid.close();
         this->ct_data = new int16_t[total_size];
@@ -706,12 +706,12 @@ public:
         ///< By default, let's set +- 30 cm as world volume
         //		const R hl   = 600.0;
         const R hl   = 800.0;
-        R       x[2] = { this->dcm_.org_xe[0] - (float) 0.5 * hl,
-                         this->dcm_.org_xe[this->dcm_.org_dim_.x] + (float) 0.5 * hl };
-        R       y[2] = { this->dcm_.org_ye[0] - (float) 0.5 * hl,
-                         this->dcm_.org_ye[this->dcm_.org_dim_.y] + (float) 0.5 * hl };
-        R       z[2] = { this->dcm_.org_ze[0] - (float) 0.5 * hl,
-                         this->dcm_.org_ze[this->dcm_.org_dim_.z] + (float) 0.5 * hl };
+        R       x[2] = { this->dcm_.org_xe[0] - (double) 0.5 * hl,
+                         this->dcm_.org_xe[this->dcm_.org_dim_.x] + (double) 0.5 * hl };
+        R       y[2] = { this->dcm_.org_ye[0] - (double) 0.5 * hl,
+                         this->dcm_.org_ye[this->dcm_.org_dim_.y] + (double) 0.5 * hl };
+        R       z[2] = { this->dcm_.org_ze[0] - (double) 0.5 * hl,
+                         this->dcm_.org_ze[this->dcm_.org_dim_.z] + (double) 0.5 * hl };
 
         this->world->geo = new mqi::grid3d<density_t, R>(x, 2, y, 2, z, 2);
 
@@ -961,7 +961,7 @@ public:
         printf("Selecting %d: %s\n", bnb, beam_names[bnb - 1].c_str());
         const mqi::dataset* mqi_ds            = this->tx->get_beam_dataset(bnb);
         const mqi::dataset* ion_beam_sequence = (*mqi_ds)("IonControlPointSequence")[0];
-        std::vector<float>  temp_sid;
+        std::vector<double>  temp_sid;
         ion_beam_sequence->get_values("SnoutPosition", temp_sid);
         this->sid = temp_sid[0] + 50;
         printf("sid %f\n", this->sid);
@@ -1234,7 +1234,7 @@ public:
     run_by_beam_stat(mqi::node_t<R>* world = mc::mc_world) {
         //// Beam simulation
         /// TODO: faster implementation
-        float current_stat = 100.0;
+        double current_stat = 100.0;
         printf("Run by beam\n");
         std::chrono::time_point<std::chrono::high_resolution_clock> start, stop;
         std::chrono::duration<double, std::milli>                   duration;
@@ -1327,13 +1327,13 @@ public:
     }   //run_by_beam_stat
 
     CUDA_HOST
-    float
+    double
     calculate_stat(int n_histories) {
         auto                                      start = std::chrono::high_resolution_clock::now();
         auto                                      stop  = std::chrono::high_resolution_clock::now();
         std::chrono::duration<double, std::milli> duration = stop - start;
-        float*   standard_deviation                        = new float[this->stat_roi_size];
-        float*   dose_mean                                 = new float[this->stat_roi_size];
+        double*   standard_deviation                        = new double[this->stat_roi_size];
+        double*   dose_mean                                 = new double[this->stat_roi_size];
         uint32_t n_threads                                 = 0;
         uint32_t n_blocks                                  = 0;
         uint32_t voxels_per_thread                         = 0;
@@ -1366,16 +1366,16 @@ public:
             if (this->stat_roi_size % (n_threads * n_blocks * voxels_per_thread) > 0)
                 n_blocks += 1;   // increase block size if there is any remainder
         }
-        float* d_standard_deviation;
-        float* d_dose_mean;
-        gpu_err_chk(cudaMalloc(&d_standard_deviation, sizeof(float) * this->stat_roi_size));
+        double* d_standard_deviation;
+        double* d_dose_mean;
+        gpu_err_chk(cudaMalloc(&d_standard_deviation, sizeof(double) * this->stat_roi_size));
         gpu_err_chk(cudaMemcpy(d_standard_deviation,
                                standard_deviation,
-                               sizeof(float) * this->stat_roi_size,
+                               sizeof(double) * this->stat_roi_size,
                                cudaMemcpyHostToDevice));
-        gpu_err_chk(cudaMalloc(&d_dose_mean, sizeof(float) * this->stat_roi_size));
+        gpu_err_chk(cudaMalloc(&d_dose_mean, sizeof(double) * this->stat_roi_size));
         gpu_err_chk(cudaMemcpy(
-          d_dose_mean, dose_mean, sizeof(float) * this->stat_roi_size, cudaMemcpyHostToDevice));
+          d_dose_mean, dose_mean, sizeof(double) * this->stat_roi_size, cudaMemcpyHostToDevice));
         printf("Calculating standard deviation\n");
         calculate_standard_deviation<R><<<n_blocks, n_threads>>>(mc::mc_world,
                                                                  d_standard_deviation,
@@ -1388,11 +1388,11 @@ public:
         printf("Standard deviation calculation done\n");
         gpu_err_chk(cudaMemcpy(standard_deviation,
                                d_standard_deviation,
-                               sizeof(float) * this->stat_roi_size,
+                               sizeof(double) * this->stat_roi_size,
                                cudaMemcpyDeviceToHost));
         gpu_err_chk(cudaFree(d_standard_deviation));
         gpu_err_chk(cudaMemcpy(
-          dose_mean, d_dose_mean, sizeof(float) * this->stat_roi_size, cudaMemcpyDeviceToHost));
+          dose_mean, d_dose_mean, sizeof(double) * this->stat_roi_size, cudaMemcpyDeviceToHost));
         gpu_err_chk(cudaFree(d_dose_mean));
 #else
 
@@ -1422,11 +1422,11 @@ public:
         auto                                      start = std::chrono::high_resolution_clock::now();
         auto                                      stop  = std::chrono::high_resolution_clock::now();
         std::chrono::duration<double, std::milli> duration  = stop - start;
-        float*                                    dose_mean = new float[this->stat_roi_size];
+        double*                                    dose_mean = new double[this->stat_roi_size];
         uint32_t                                  n_threads = 0;
         uint32_t                                  n_blocks  = 0;
         uint32_t                                  voxels_per_thread = 0;
-        float                                     weight = target_histories * 1.0 / n_histories;
+        double                                     weight = target_histories * 1.0 / n_histories;
 #if defined(__CUDACC__)
         n_threads = thread_limit;
         if (this->stat_roi_size < n_threads) {
@@ -1642,7 +1642,7 @@ public:
     mqi::node_t<R>*
     create_voxelized_aperture(mqi::aperture* geometry) {
         mqi::node_t<R>*                   aperture = new mqi::node_t<R>;
-        std::vector<std::array<float, 2>> block    = geometry->block_data[0];
+        std::vector<std::array<double, 2>> block    = geometry->block_data[0];
         geometry->volume.dump();
         geometry->pos.dump();
 
@@ -1654,7 +1654,7 @@ public:
             block_segment[i] = new mqi::vec2<R>[block.size()];
             num_segments[i]  = block.size();
             for (int j = 0; j < block.size(); j++) {
-                std::array<float, 2> pos = block[j];
+                std::array<double, 2> pos = block[j];
                 block_segment[i][j].x    = pos[0] + geometry->pos.x;
                 block_segment[i][j].y    = pos[1] + geometry->pos.y;
             }
@@ -1745,7 +1745,7 @@ public:
     sol1_1(mqi::vec3<R> pos, mqi::vec2<R>* segment, uint16_t num_segment) {
         mqi::vec2<R> pos0 = segment[0];
         mqi::vec2<R> pos1;
-        float        min_y, max_y, max_x, intersect_x;
+        double        min_y, max_y, max_x, intersect_x;
         int          count = 0;
         int          i, j, c = 0;
         for (i = 0, j = num_segment - 1; i < num_segment; j = i++) {
@@ -1761,10 +1761,10 @@ public:
     }
     CUDA_HOST_DEVICE
     bool
-    sol1_1(mqi::vec2<float> pos, mqi::vec3<float>*& contour_points, int num_points) {
-        mqi::vec3<float> pos0 = contour_points[0];
-        mqi::vec3<float> pos1;
-        float            min_y, max_y, max_x, intersect_x;
+    sol1_1(mqi::vec2<double> pos, mqi::vec3<double>*& contour_points, int num_points) {
+        mqi::vec3<double> pos0 = contour_points[0];
+        mqi::vec3<double> pos1;
+        double            min_y, max_y, max_x, intersect_x;
         int              count = 0;
         int              i, j, c = 0;
         for (i = 0, j = num_points - 1; i < num_points; j = i++) {
@@ -1781,14 +1781,14 @@ public:
     CUDA_HOST_DEVICE
     void
     fill_contour(uint8_t*           volume_contour,
-                 mqi::vec3<float>*& contour_points,
+                 mqi::vec3<double>*& contour_points,
                  int                num_contour_points,
                  mqi::vec3<ijk_t>   dim,
                  const R*           x_pix,
                  const R*           y_pix,
                  const R*           z_pix,
-                 float              dx,
-                 float              dy) {
+                 double              dx,
+                 double              dy) {
         int x_ind = 0, y_ind = 0, z_ind = -1;
         for (int i = 0; i < dim.z - 1; i++) {
             if (contour_points[0].z > z_pix[i] && contour_points[0].z < z_pix[i + 1]) {
@@ -1796,9 +1796,9 @@ public:
                 break;
             }
         }
-        mqi::vec2<float> pos;
+        mqi::vec2<double> pos;
         uint32_t         idx = 0;
-        float            x_pos, y_pos;
+        double            x_pos, y_pos;
         if (z_ind >= 0) {
             for (x_ind = 0; x_ind < dim.x - 1; x_ind++) {
                 for (y_ind = 0; y_ind < dim.y - 1; y_ind++) {

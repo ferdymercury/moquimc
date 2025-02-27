@@ -87,7 +87,7 @@ public:
         rect3d<int16_t, R>::dim_.z = nz;
         double x0, y0;
         dz_ = new R[nz];
-        float dz;
+        double dz;
         for (size_t i = 0; i < nz; ++i) {
             gdcm::Scanner::TagToValue const& m0 = s.GetMapping(files_[i].c_str());
 
@@ -142,8 +142,8 @@ public:
         size_t nb_voxels_3d = nb_voxels_2d * rect3d<int16_t, R>::dim_.z;
 
         rect3d<int16_t, R>::data_.resize(nb_voxels_3d);
-        float intercept = 0;
-        float slope     = 1;
+        double intercept = 0;
+        double slope     = 1;
 
         for (size_t i = 0; i < rect3d<int16_t, R>::dim_.z; ++i) {
 
@@ -153,8 +153,8 @@ public:
             const gdcm::Image& img = reader.GetImage();
 
             //n_x * n_y * bytes = img.GetBufferLength()
-            intercept = float(img.GetIntercept());
-            slope     = float(img.GetSlope());
+            intercept = double(img.GetIntercept());
+            slope     = double(img.GetSlope());
 
             gdcm::PixelFormat pixeltype = img.GetPixelFormat();
 

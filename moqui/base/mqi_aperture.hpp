@@ -20,10 +20,10 @@ public:
     const bool is_rectangle;
 
     /// aperture dimension, (Lx, Ly, Lz) for box or (R, H, dummy) for cylinder
-    const mqi::vec3<float> volume;
+    const mqi::vec3<double> volume;
 
     /// X-Y opening points. Divergence is not considered.
-    const std::vector<std::vector<std::array<float, 2>>> block_data;
+    const std::vector<std::vector<std::array<double, 2>>> block_data;
 
 public:
     /// Creates an aperture
@@ -31,10 +31,10 @@ public:
     /// \param v a volume, e.g., (Lx,Ly,Lz) or (R, thickness, ignored).
     /// \param p a center position of the aperture.
     /// \param is_rect tells whether aperture is box shape or cylinder shape.
-    aperture(std::vector<std::vector<std::array<float, 2>>> xypts,
-             mqi::vec3<float>&                              v,
-             mqi::vec3<float>&                              p,
-             mqi::mat3x3<float>&                            r,
+    aperture(std::vector<std::vector<std::array<double, 2>>> xypts,
+             mqi::vec3<double>&                              v,
+             mqi::vec3<double>&                              p,
+             mqi::mat3x3<double>&                            r,
              bool                                           is_rect = true) :
         block_data(xypts),
         volume(v), is_rectangle(is_rect), geometry(p, r, mqi::geometry_type::BLOCK) {

@@ -11,7 +11,7 @@
 #include <moqui/base/mqi_grid3d.hpp>
 #include <moqui/base/mqi_math.hpp>
 #include <moqui/base/mqi_vec.hpp>
-//typedef float phsp_t;
+//typedef double phsp_t;
 
 namespace mqi
 {
@@ -165,7 +165,7 @@ public:
     sol1_1(mqi::vec3<R> pos, mqi::vec2<R>* segment, uint16_t num_segment) {
         mqi::vec2<R> pos0 = segment[0];
         mqi::vec2<R> pos1;
-        float        min_y, max_y, max_x, intersect_x;
+        double        min_y, max_y, max_x, intersect_x;
         int          count = 0;
         int          i, j, c = 0;
         for (i = 0, j = num_segment - 1; i < num_segment; j = i++) {
@@ -187,7 +187,7 @@ public:
         bool inside;
         for (int i = 0; i < this->num_opening; i++) {
             mqi::vec2<R>* segment = this->block_segment[i];
-            //        std::vector<std::array<float, 2>> segment = block_data[i];
+            //        std::vector<std::array<double, 2>> segment = block_data[i];
             //        printf("segment size %lu\n", segment.size());
             //        inside = sol1(pos, segment, volume->num_segment[i]);
             inside = sol1_1(pos, segment, this->num_segments[i]);

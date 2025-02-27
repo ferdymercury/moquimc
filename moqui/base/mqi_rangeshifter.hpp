@@ -18,12 +18,12 @@ class rangeshifter : public geometry
 
 public:
     const bool             is_rectangle;   ///< type of volume
-    const mqi::vec3<float> volume;         ///< volume dimension
+    const mqi::vec3<double> volume;         ///< volume dimension
 
     /// Constructor
-    rangeshifter(mqi::vec3<float>&   v,   ///< x,y,z or r, theta, thickness
-                 mqi::vec3<float>&   p,   ///< position
-                 mqi::mat3x3<float>& r,   ///< rotation matrix
+    rangeshifter(mqi::vec3<double>&   v,   ///< x,y,z or r, theta, thickness
+                 mqi::vec3<double>&   p,   ///< position
+                 mqi::mat3x3<double>& r,   ///< rotation matrix
                  bool                is_rect = true) :
         volume(v),
         is_rectangle(is_rect), geometry(p, r, mqi::geometry_type::RANGESHIFTER) {

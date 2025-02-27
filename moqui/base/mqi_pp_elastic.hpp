@@ -8,7 +8,7 @@ namespace mqi
 
 ///< Data table (from Geant4 Hard00, Ei=0.5 MeV, Ef = 300.0 MeV, dE = 0.5 MeV,
 ///< - Cross-section (per volume)
-CUDA_CONSTANT const float cs_pp_e_g4_table[600] = {
+CUDA_CONSTANT const double cs_pp_e_g4_table[600] = {
     0.00000, 2.54109, 4.64796, 4.93231, 4.77709, 4.50612, 4.21575, 3.93742, 3.68050, 3.44700,
     3.23557, 3.04422, 2.87160, 2.71438, 2.57187, 2.44140, 2.32164, 2.21191, 2.11088, 2.01722,
     1.93091, 1.85062, 1.77568, 1.70610, 1.64053, 1.57965, 1.52211, 1.46859, 1.41774, 1.37023,

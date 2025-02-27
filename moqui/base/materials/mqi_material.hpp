@@ -8,7 +8,7 @@
 namespace mqi
 {
 template<typename R>
-using fp_compute_rsp = float (*)(R rho_mass, R Ek);
+using fp_compute_rsp = R (*)(R rho_mass, R Ek);
 template<typename R>
 using fp_compute_rl = R (*)(R rho_mass, R water_density, R radiation_length_water);
 typedef uint16_t material_id;

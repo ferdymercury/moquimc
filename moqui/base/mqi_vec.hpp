@@ -61,7 +61,7 @@ public:
     //sqrtf : for float, sqrtg: for double
     T
     norm() const {
-        return sqrtf(x * x + y * y);
+        return sqrt(x * x + y * y);
     }
 #else
     T
@@ -183,7 +183,7 @@ public:
     //sqrtf : for float, sqrtg: for double
     T
     norm() const {
-        return sqrtf(x * x + y * y + z * z);
+        return sqrt(x * x + y * y + z * z);
     }
 #else
     T
@@ -197,7 +197,7 @@ public:
     //sqrtf : for float, sqrtg: for double
     void
     normalize() {
-        T n = sqrtf(x * x + y * y + z * z);
+        T n = sqrt(x * x + y * y + z * z);
         x /= n;
         y /= n;
         z /= n;
@@ -341,7 +341,7 @@ public:
     //sqrtf : for float, sqrtg: for double
     T
     norm() const {
-        return sqrtf(x * x + y * y + z * z + s * s);
+        return sqrt(x * x + y * y + z * z + s * s);
     }
 #else
     T

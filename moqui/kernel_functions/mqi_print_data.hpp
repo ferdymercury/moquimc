@@ -58,7 +58,7 @@ print_node_specification_gpu(mqi::node_t<R>* node) {
     mqi::vec3<mqi::ijk_t> idx(0, 0, 0);
     mqi::material_id      v = (*node->geo)[idx];
     //    mqi::material_t<R> v = (*node->geo)[idx];
-    printf("From phantom: (%d, %d, %d): %f\n", idx.x, idx.y, idx.z, v);
+    printf("From phantom: (%d, %d, %d): %g\n", idx.x, idx.y, idx.z, v);
 
     for (int i = 0; i < node->n_children; ++i) {
         printf("child node: %d, %p\n", i, node->children[i]);
@@ -123,8 +123,8 @@ print_node_specification(mqi::node_t<R>* node) {
     mqi::vec3<mqi::ijk_t> idx(0, 0, 0);
     //    mqi::material_id      v = (*node->geo)[idx];
     //    mqi::material_t<R> v = (*node->geo)[idx];
-    float v = (*node->geo)[idx];
-    printf("From phantom: (%d, %d, %d): %f\n", idx.x, idx.y, idx.z, v);
+    double v = (*node->geo)[idx];
+    printf("From phantom: (%d, %d, %d): %g\n", idx.x, idx.y, idx.z, v);
 
     for (int i = 0; i < node->n_children; ++i) {
         printf("child node of world: %d, %p\n", i, node->children[i]);
@@ -147,7 +147,7 @@ print_density(__half* g_density, uint32_t size_) {
 
 CUDA_GLOBAL
 void
-print_density(float* g_density, uint32_t size_) {
+print_density(double* g_density, uint32_t size_) {
     for (int i = 0; i < size_; i++) {
         printf("g_density %d %.10f\n", i, g_density[i]);
     }

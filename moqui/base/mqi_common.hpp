@@ -42,7 +42,7 @@
 
 namespace mqi
 {
-typedef float phsp_t;
+typedef double phsp_t;
 
 ///<
 typedef uint64_t cnb_t;
@@ -50,9 +50,9 @@ typedef int32_t  ijk_t;
 
 #if defined(__CUDACC__)
 //typedef __half density_t;
-typedef float density_t;
+typedef double density_t;
 #else
-typedef float density_t;
+typedef double density_t;
 #endif
 const uint16_t   block_limit  = 65535;   //limited to 2^16 //maybe larger?
 const uint16_t   thread_limit = 512;
@@ -93,7 +93,7 @@ typedef enum
     APERTURE_OPEN  = 2,
     NORMAL_PHYSICS = 3
 } transport_type;
-const float max_step_global = 1.0;
+const double max_step_global = 1.0;
 
 }   // namespace mqi
 

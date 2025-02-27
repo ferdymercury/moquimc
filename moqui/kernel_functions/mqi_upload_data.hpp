@@ -23,6 +23,8 @@ upload_vertices(mqi::vertex_t<R>* src, mqi::vertex_t<R>*& dest, size_t h0, size_
 void
 upload_ct(int16_t* c_ct, int16_t*& g_ct, uint32_t size_);
 void
+upload_density(double* c_density, double*& g_density, uint32_t size_);
+void
 upload_density(float* c_density, float*& g_density, uint32_t size_);
 void
 upload_density(__half* c_density, __half*& g_density, uint32_t size_);
@@ -423,6 +425,12 @@ void
 upload_ct(int16_t* c_ct, int16_t*& g_ct, uint32_t size_) {
     gpu_err_chk(cudaMalloc(&g_ct, size_ * sizeof(int16_t)));
     gpu_err_chk(cudaMemcpy(g_ct, c_ct, size_ * sizeof(int16_t), cudaMemcpyHostToDevice));
+}
+
+void
+upload_density(double* c_density, double*& g_density, uint32_t size_) {
+    gpu_err_chk(cudaMalloc(&g_density, size_ * sizeof(double)));
+    gpu_err_chk(cudaMemcpy(g_density, c_density, size_ * sizeof(double), cudaMemcpyHostToDevice));
 }
 
 void

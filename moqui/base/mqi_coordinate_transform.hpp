@@ -28,7 +28,7 @@ class coordinate_transform
 {
 public:
     /// A constant to convert degree to radian.
-    const float deg2rad = M_PI / 180.0;
+    const double deg2rad = M_PI / 180.0;
 
     ///< translation
     vec3<T> translation;

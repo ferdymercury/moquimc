@@ -17,8 +17,8 @@ class fippel_physics : public physics_list<R>
 public:
     const physics_constants<R>& units = physics_list<R>::units;
 
-    const float max_step        = 1.0;
-    const float max_energy_loss = 0.25;   // ratio
+    const double max_step        = 1.0;
+    const double max_energy_loss = 0.25;   // ratio
 
     mqi::p_ionization_tabulated<R> p_ion;
     mqi::pp_elastic_tabulated<R>   pp_e;
