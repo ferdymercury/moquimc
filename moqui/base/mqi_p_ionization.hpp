@@ -6,9 +6,9 @@
 namespace mqi
 {
 
-///< Ionization cross section data table, from Geant4 TestEm0.
+///< Ionization cross section data table, from Geant4 TestEm0, using G4_WATER.
 ///< Ei = 0.1 * MeV,  Ef = 299.6 MeV, dE = 0.5 MeV, Te_cut = 0.1 mm (85.1138 keV)
-///< Cross-section (per)  mm2/g
+///< Cross-section (per) mm2/g, it was divided by G4_WATER density (1)
 CUDA_CONSTANT const float cs_p_ion_table[600] = {
     0,       0,       0,       0,       0,       0,       0,       0,       0,       0,
     0,       0,       0,       0,       0,       0,       0,       0,       0,       0,
@@ -71,7 +71,7 @@ CUDA_CONSTANT const float cs_p_ion_table[600] = {
     187.185, 187.025, 186.864, 186.705, 186.545, 186.386, 186.228, 186.07,  185.913, 185.756,
     185.599, 185.443, 185.288, 185.133, 184.978, 184.824, 184.67,  184.517, 184.364, 184.211
 };
-/// Restricted stopping power (with I=75 eV, no ICRU90) from Geant4 (Hadr00) in MeV/mm?, with cuts 0.1 mm (85.1138 keV) ?
+/// Restricted stopping power (with I=75 eV, no ICRU90) from Geant4 (Hadr00) in MeV/mm, with cuts 0.1 mm (85.1138 keV) ? G4_WATER
 CUDA_CONSTANT const float restricted_stopping_power_table[600] = {
     96.14890, 37.78070, 25.01300, 19.19030, 15.72410, 13.29680, 11.59950, 10.30940, 9.32706,
     8.52858,  7.87007,  7.30757,  6.82805,  6.41238,  6.04993,  5.73076,  5.44499,  5.18804,
@@ -142,7 +142,7 @@ CUDA_CONSTANT const float restricted_stopping_power_table[600] = {
     0.31787,  0.31755,  0.31723,  0.31691,  0.31660,  0.31628
 };
 
-/// Restricted range  (with I=75 eV, no ICRU90) from Geant4 (Hadr00) in mm?, with cuts 0.1 mm (85.1138 keV) ?
+/// Restricted range  (with I=75 eV, no ICRU90) from Geant4 (Hadr00) in mm, with cuts 0.1 mm (85.1138 keV) ? G4_WATER
 CUDA_CONSTANT const float range_steps[600] = {
     0.001391,   0.010586,   0.027285,   0.050344,   0.079284,   0.113983,   0.154354,   0.200174,
     0.251242,   0.307367,   0.368453,   0.434431,   0.505264,   0.580871,   0.661183,   0.746137,
