@@ -510,7 +510,7 @@ public:
     /// param : HU (unitless)
     /// return: density (g/mm^-3)
     /// Based on Schneider conversion in TOPAS
-    /// W. Schneider, et al., Phys. Med. Biol., 1996 ?? Which Schneider, not sure.
+    /// W. Schneider, et al., Phys. Med. Biol., 2000, https://doi.org/10.1088/0031-9155/45/2/314
     virtual R
     hu_to_density(int16_t hu) {
         if (hu < -1000) {
